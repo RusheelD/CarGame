@@ -30,6 +30,12 @@ class Car(pyglet.sprite.Sprite):
         
 
     def on_key_press(self, symbol, modifiers):
+        self.move_start(symbol)
+
+    def on_key_release(self, symbol, modifiers):
+        self.move_stop(symbol)
+
+    def move_start(self, symbol):
         if symbol == key.UP:
             self.keys['up'] = True
             self.drag = 0
@@ -42,7 +48,7 @@ class Car(pyglet.sprite.Sprite):
         elif symbol == key.SPACE:
             self.velocity = 0
 
-    def on_key_release(self, symbol, modifiers):
+    def move_stop(self, symbol):
         if symbol == key.UP:
             self.keys['up'] = False
             self.velocity = 0
@@ -53,6 +59,5 @@ class Car(pyglet.sprite.Sprite):
             self.keys['left'] = False
         elif symbol == key.RIGHT:
             self.keys['right'] = False
-        
         
     

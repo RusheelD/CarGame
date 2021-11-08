@@ -1,5 +1,6 @@
 import pyglet
 from Car import *
+from AI import *
 
 window = pyglet.window.Window(1400, 800)
 
@@ -10,7 +11,7 @@ car_number = 1
 car_image = pyglet.image.load('car' + str(car_number) + '.png')
 car_image.anchor_x = int(car_image.width / 2)
 car_image.anchor_y = int(car_image.height / 2)
-car = Car(car_image)
+car = AI(car_image)
 car.scale = 0.2
 car.rotation -= 90
 car.x = window.width / 2
@@ -30,6 +31,7 @@ def update(dt):
         car.x = car.x % window.width
     if(car.y > window.height or car.y < 0):
         car.y = car.y % window.height
+    car.toggle_move()
 
 pyglet.clock.schedule_interval(update, 1/120.0)
 pyglet.app.run()
