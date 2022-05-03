@@ -11,8 +11,13 @@ class AI(Car):
         self.turning = False
         self.move_direction = None
         self.turn_direction = None
+        self.enabled = False
     
     def toggle_move(self):
+        if(not(self.enabled)):
+            self.moving = False
+            self.turning = False
+            return
         odds = random.randint(1, 100)
 
         if(self.moving):

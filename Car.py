@@ -5,9 +5,10 @@ class Car(pyglet.sprite.Sprite):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.velocity= 0.0
-        self.max_velocity = 500.0
+        self.max_velocity = 1500.0
         self.rotate_speed = 200.0
         self.keys = dict(left=False, right=False, up=False, down=False)
+        self.enabled = False
     
     def update(self, dt):
         if self.velocity > self.max_velocity:
@@ -30,34 +31,49 @@ class Car(pyglet.sprite.Sprite):
         
 
     def on_key_press(self, symbol, modifiers):
-        self.move_start(symbol)
+        if(symbol == key.I):
+            self.enabled = True
+        elif(symbol == key.O):
+            self.enabled = False
+            for s in [key.UP, key.DOWN, key.LEFT, key.RIGHT]:
+                self.move_stop(s)
+        else:
+            self.move_start(symbol)
 
     def on_key_release(self, symbol, modifiers):
-        self.move_stop(symbol)
+        if(symbol == key.I):
+            self.enabled = True
+        elif(symbol == key.O):
+            self.enabled = False
+        else:
+            self.move_stop(symbol)
 
     def move_start(self, symbol):
-        if symbol == key.UP:
+        if symbol == key.UP or symbol == key.W:
             self.keys['up'] = True
             self.drag = 0
-        elif symbol == key.DOWN:
+        elif symbol == key.DOWN or symbol == key.S:
             self.keys['down'] = True
-        elif symbol == key.LEFT:
+        elif symbol == key.LEFT or symbol == key.A:
             self.keys['left'] = True
-        elif symbol == key.RIGHT:
+        elif symbol == key.RIGHT or symbol == key.D:
             self.keys['right'] = True
         elif symbol == key.SPACE:
             self.velocity = 0
 
     def move_stop(self, symbol):
-        if symbol == key.UP:
+        if symbol == key.UP or symbol == key.W:
             self.keys['up'] = False
             self.velocity = 0
-        elif symbol == key.DOWN:
+        elif symbol == key.DOWN or symbol == key.S:
             self.keys['down'] = False
             self.velocity = 0
-        elif symbol == key.LEFT:
+        elif symbol == key.LEFT or symbol == key.A:
             self.keys['left'] = False
-        elif symbol == key.RIGHT:
+        elif symbol == key.RIGHT or symbol == key.D:
             self.keys['right'] = False
+
+    def toggle_move(self):
+        return
         
     
